@@ -19,6 +19,8 @@ defmodule UiWeb.Router do
 
     live "/", PageLive, :index
 
+    live "/sensors", SensorsLive, :index
+
     live "/users", UserLive.Index, :index
     live "/users/new", UserLive.Index, :new
     live "/users/:id/edit", UserLive.Index, :edit

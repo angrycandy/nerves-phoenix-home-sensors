@@ -1,11 +1,40 @@
 import Config
 
+config :ui, AirNowApi,
+  api_key:
+    System.get_env("AIRNOWAPI_API_KEY") ||
+      raise("environment variable AIRNOWAPI_API_KEY is missing.")
+
+config :ui, ZipCodeApi,
+  time_zone: "America/New_York",
+  zip_code: "37404",
+  app_key:
+    System.get_env("ZIPCODEAPI_APP_KEY") ||
+      raise("environment variable ZIPCODEAPI_APP_KEY is missing.")
+
+# https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets
+# The secret key base is used to sign/encrypt cookies and other secrets.
+# A default value is used in config/dev.exs and config/test.exs but you
+# want to use a different value for prod and you most likely don't want
+# to check this value into version control, so we use an environment
+# variable instead.
+#
+# Generate SECRET_KEY_BASE: cd ../ui && mix phx.gen.secret
+
+# signing_salt is not secret because it will be used with secret_key_base.
+#
+signing_salt = "AAAABjEyERMkxgDh"
+
+# Use signing_salt for dev LSP.
+#
+secret_key_base = System.get_env("SECRET_KEY_BASE") || signing_salt
+
 config :ui, UiWeb.Endpoint,
   url: [host: "nerves.local"],
   http: [port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  secret_key_base: "HEY05EB1dFVSu6KykKHuS4rQPQzSHv4F7mGVB/gnDLrIu75wE/ytBXy2TaL3A6RA",
-  live_view: [signing_salt: "AAAABjEyERMkxgDh"],
+  secret_key_base: secret_key_base,
+  live_view: [signing_salt: signing_salt],
   check_origin: false,
   # Start the server since we're running in a release instead of through `mix`
   server: true,

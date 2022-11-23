@@ -1,5 +1,7 @@
 import Config
 
+config :ui, Ui.Sensors, HomeSensors.Dev
+
 # Configure your database
 config :ui, Ui.Repo,
   database: Path.expand("../ui_dev.db", Path.dirname(__ENV__.file)),

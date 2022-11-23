@@ -1,4 +1,18 @@
-# Hello Phoenix
+# Nerves Phoenix Home Sensors
+
+* The base commit is [Hello Phoenix] at [commit] from [Nerves Example].
+* http://localhost:4000/sensors works with `cd ui; mix phx.server`
+* Use https://docs.airnowapi.org by ZIP code for https://www.airnow.gov data.
+* Use https://www.zipcodeapi.com/API#zipToLoc for the ZIP code's time zone.
+* Works with `MIX_TARGET=rpi0` and [GVH5102], [GVH5074] Thermo-Hygrometers.
+
+[Nerves Example]: https://github.com/nerves-project/nerves_examples
+[Hello Phoenix]: https://github.com/nerves-project/nerves_examples/tree/main/hello_phoenix
+[commit]: https://github.com/nerves-project/nerves_examples/commit/c2459db4a68908e5caf1066d99ab1e36bb66a454
+[GVH5102]: https://fccid.io/2AQA6-H5102
+[GVH5074]: https://fccid.io/2AQA6-H5074
+
+## Hello Phoenix Introduction
 
 This example demonstrates a basic poncho project for deploying a [Phoenix
 Framework]-based application to a Nerves device. A "poncho project" is similar
@@ -46,13 +60,15 @@ see the [`vintage_net` documentation](https://hexdocs.pm/vintage_net/).
     cd ../firmware
     ```
 
-5. Specify your target and other environment variables as needed:
+5. Specify your target and other environment variables as needed in mix-export:
 
     ```bash
-    export MIX_TARGET=rpi0
+    . mix-export
 
-    # If you're using WiFi:
-    #
+    #   export MIX_TARGET=rpi0
+    #   export SECRET_KEY_BASE=...
+    #   export AIRNOWAPI_API_KEY=...
+    #   export ZIPCODEAPI_APP_KEY=...
     #   export NERVES_NETWORK_SSID=your_wifi_name
     #   export NERVES_NETWORK_PSK=your_wifi_password
     ```

@@ -1,0 +1,32 @@
+<table>
+  <thead>
+    <tr>
+      <%= @aqi %>
+    </tr>
+    <tr>
+      <td></td>
+      <td><em>Inside</em></td>
+      <td>˚F</td>
+      <td><em>Outside</em></td>
+      <td>˚F</td>
+    </tr>
+    <tr>
+      <th>Time</th>
+      <th>Temp</th>
+      <th>Dew Pt</th>
+      <th>Temp</th>
+      <th>Dew Pt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for row <- @history do %>
+      <tr>
+        <td><%= List.first(row) %></td>
+        <td><%= Enum.at(row, 1) %></td>
+        <td><%= Enum.at(row, 2) %></td>
+        <td><%= Enum.at(row, 4) %></td>
+        <td><%= Enum.at(row, 5) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -4,6 +4,7 @@ defmodule Firmware.MixProject do
   @app :firmware
   @version "0.1.0"
   @all_targets [:rpi, :rpi0, :rpi2, :rpi3, :rpi3a, :rpi4, :bbb, :osd32mp1, :x86_64, :grisp2]
+  @ble_targets [:rpi0, :rpi3, :rpi3a]
 
   def project do
     [
@@ -35,14 +36,19 @@ defmodule Firmware.MixProject do
       {:shoehorn, "~> 0.9.0"},
       {:ring_logger, "~> 0.8.1"},
       {:toolshed, "~> 0.2.13"},
+      {:home_sensors, path: "../home_sensors"},
 
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.13.0", targets: @all_targets},
       {:nerves_pack, "~> 0.7.0", targets: @all_targets},
+      {:nerves_time_zones, "~> 0.1.2", targets: @all_targets},
 
       # Poncho dependencies
       # See https://embedded-elixir.com/post/2017-05-19-poncho-projects
       {:ui, path: "../ui", targets: @all_targets, env: Mix.env()},
+
+      # BLE
+      {:blue_heron_transport_uart, "~> 0.1.2", targets: @ble_targets},
 
       # Dependencies for specific targets
       # NOTE: It's generally low risk and recommended to follow minor version

@@ -32,14 +32,27 @@ defmodule Firmware.Application do
   end
 
   def children(_target) do
+    spawn(&stop_blinky_leds/0)
+
     [
       # Children for all targets except host
       # Starts a worker by calling: Firmware.Worker.start_link(arg)
       # {Firmware.Worker, arg},
+      {Firmware.Blue.Supervisor, %{device: "ttyS0"}}
     ]
   end
 
   def target() do
     Application.get_env(:firmware, :target)
+  end
+
+  defp stop_blinky_leds() do
+    led_base_path = "/sys/class/leds"
+
+    File.ls!(led_base_path)
+    |> Enum.each(fn led ->
+      Path.join([led_base_path, led, "trigger"])
+      |> File.write("none")
+    end)
   end
 end

@@ -20,6 +20,9 @@ defmodule Ui.Application do
       # {Ui.Worker, arg}
     ]
 
+    sensors = Application.get_env(:ui, Ui.Sensors)
+    children = children ++ if sensors, do: [sensors], else: []
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Ui.Supervisor]
